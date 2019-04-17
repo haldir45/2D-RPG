@@ -16,33 +16,78 @@ public abstract class Character : MonoBehaviour
     private float speed;
 
     /// <summary>
-    /// They Player's Animator
+    /// The Player's Animator
     /// </summary>
     private Animator animator;
+
+    /// <summary>
+    /// The Player's Rigibody
+    /// </summary>
+    private Rigidbody2D rigibody;
+
+    public bool IsMoving {
+        get {
+            return direction.x != 0 || direction.y !=  0;
+        }
+
+    }
+
 
     // Start is called before the first frame update
     protected virtual void Start()
     {
-       animator = GetComponent<Animator>();
-      
+        animator = GetComponent<Animator>();
+        rigibody = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     protected virtual void Update()
+    {
+        HandleLayers();
+    }
+
+    private void FixedUpdate()
     {
         Move();
     }
 
     public void Move()
     {
-        transform.Translate(direction * speed * Time.deltaTime);
-        AnimateMovement(direction);
+        rigibody.velocity = direction.normalized * speed;
+
     }
 
-    public void AnimateMovement(Vector2 direction)
+    /// <summary>
+    /// Handling animator's layers
+    /// </summary>
+    public void HandleLayers()
     {
-        animator.SetFloat("x", direction.x);
-        animator.SetFloat("y", direction.y);
+        if (IsMoving)
+        {
+            ActivateLayer("WalkLayer");
+
+            //Sets the animation parameter so that he faces the right direction
+            animator.SetFloat("x", direction.x);
+            animator.SetFloat("y", direction.y);
+        }
+        else
+        {
+            ActivateLayer("IdleLayer");
+        }
+    }
+
+    /// <summary>
+    /// Activates the <paramref name="layerName"/>
+    /// </summary>
+    /// <param name="layerName"></param>
+    public void ActivateLayer(string layerName) {
+
+        for (int i = 0; i < animator.layerCount; i++)
+        {
+            animator.SetLayerWeight(i, 0);
+        }
+
+        animator.SetLayerWeight(animator.GetLayerIndex(layerName), 1);
     }
 
 }

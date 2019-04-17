@@ -203,6 +203,7 @@ GameObject:
   - component: {fileID: 253809327}
   - component: {fileID: 253809329}
   - component: {fileID: 253809330}
+  - component: {fileID: 253809331}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -287,9 +288,9 @@ MonoBehaviour:
   speed: 5
   health: {fileID: 1029863390}
   mana: {fileID: 2019347747}
-  initHealth: 50
+  initHealth: 80
   maxHealth: 80
-  initMana: 20
+  initMana: 40
   maxMana: 40
 --- !u!95 &253809330
 Animator:
@@ -310,6 +311,27 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!50 &253809331
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 253809326}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!1 &312128702
 GameObject:
   m_ObjectHideFlags: 0
