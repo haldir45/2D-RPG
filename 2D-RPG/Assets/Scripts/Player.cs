@@ -4,9 +4,17 @@ using UnityEngine;
 
 public class Player : Character
 {
+    [SerializeField]
+    private Stat health,mana;
+
+    [SerializeField]
+    private float initHealth, maxHealth, initMana, maxMana;
+
     // Start is called before the first frame update
     protected override void Start()
     {
+        health.Initialize(initHealth, maxHealth);
+        mana.Initialize(initMana, maxMana);
         base.Start();
     }
 
