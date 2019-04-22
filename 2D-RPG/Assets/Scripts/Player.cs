@@ -4,11 +4,23 @@ using UnityEngine;
 
 public class Player : Character
 {
+    /// <summary>
+    /// The player's health and mana stat
+    /// </summary>
     [SerializeField]
     private Stat health,mana;
 
+    /// <summary>
+    /// The player's initial Health,Mana and maximum Heald,Mana
+    /// </summary>
     [SerializeField]
     private float initHealth, maxHealth, initMana, maxMana;
+
+    /// <summary>
+    /// The player's spells
+    /// </summary>
+    [SerializeField]
+    private GameObject[] spellPrefab;
 
     // Start is called before the first frame update
     protected override void Start()
@@ -49,22 +61,29 @@ public class Player : Character
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            attackRoutine = StartCoroutine(Attack());
+            if (!isAttacking && !IsMoving)
+                attackRoutine = StartCoroutine(Attack());
         }
     }
 
     private IEnumerator Attack()
     {
-        if(!isAttacking && !IsMoving)
-        {
+      
             isAttacking = true;
 
             animator.SetBool("attack", isAttacking);
 
-            yield return new WaitForSeconds(3.0f);
+            yield return new WaitForSeconds(1.5f);
+
+            CastSpell();    
 
             StopAttack();
-        }
+        
 
+    }
+
+    private void CastSpell()
+    {
+        Instantiate(spellPrefab[0], transform.position, Quaternion.identity);
     }
 }
