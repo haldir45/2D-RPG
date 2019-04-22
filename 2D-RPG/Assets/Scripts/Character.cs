@@ -5,25 +5,35 @@ using UnityEngine;
 public abstract class Character : MonoBehaviour
 {
     /// <summary>
-    /// The Player's direction
+    /// Character's direction
     /// </summary>
     protected Vector2 direction;
 
     /// <summary>
-    /// The Player's movement speed
+    /// Character's movement speed
     /// </summary>
     [SerializeField]
     private float speed;
 
     /// <summary>
-    /// The Player's Animator
+    /// Character's Animator
     /// </summary>
-    private Animator animator;
+    protected Animator animator;
 
     /// <summary>
-    /// The Player's Rigibody
+    /// Character's Rigibody
     /// </summary>
     private Rigidbody2D rigibody;
+
+    /// <summary>
+    /// Character's attacking condition
+    /// </summary>
+    protected bool isAttacking;
+
+    /// <summary>
+    /// Character's reference AttackCoroutine
+    /// </summary>
+    protected Coroutine attackRoutine;
 
     public bool IsMoving {
         get {
@@ -66,9 +76,15 @@ public abstract class Character : MonoBehaviour
         {
             ActivateLayer("WalkLayer");
 
-            //Sets the animation parameter so that he faces the right direction
+            //Sets the animation parameter so that he faces the correct direction
             animator.SetFloat("x", direction.x);
             animator.SetFloat("y", direction.y);
+
+            StopAttack();
+        }else if (isAttacking)
+        {
+            
+            ActivateLayer("AttackLayer");
         }
         else
         {
@@ -88,6 +104,20 @@ public abstract class Character : MonoBehaviour
         }
 
         animator.SetLayerWeight(animator.GetLayerIndex(layerName), 1);
+    }
+
+    /// <summary>
+    /// Stops or exits attacking animation
+    /// </summary>
+    public void StopAttack()
+    {
+        if (attackRoutine != null)
+        {
+            StopCoroutine(attackRoutine);
+            isAttacking = false;
+            animator.SetBool("attack", isAttacking);
+        }
+ 
     }
 
 }
