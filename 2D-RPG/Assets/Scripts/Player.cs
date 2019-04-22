@@ -22,6 +22,18 @@ public class Player : Character
     [SerializeField]
     private GameObject[] spellPrefab;
 
+    /// <summary>
+    /// The player's cast exit points
+    /// </summary>
+    [SerializeField]
+    private Transform[] exitPoints;
+
+    /// <summary>
+    /// The exitIndex depends on player's facing.
+    /// Initial value facing down.
+    /// </summary>
+    private int exitIndex = 2;
+
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -44,18 +56,22 @@ public class Player : Character
 
         if (Input.GetKey(KeyCode.W))
         {
+            exitIndex = 0;
             direction += Vector2.up;
         }
         if (Input.GetKey(KeyCode.A))
         {
+            exitIndex = 3;
             direction += Vector2.left;
         }
         if (Input.GetKey(KeyCode.S))
         {
+            exitIndex = 2;
             direction += Vector2.down;
         }
         if (Input.GetKey(KeyCode.D))
         {
+            exitIndex = 1;
             direction += Vector2.right;
         }
 
@@ -84,6 +100,6 @@ public class Player : Character
 
     private void CastSpell()
     {
-        Instantiate(spellPrefab[0], transform.position, Quaternion.identity);
+        Instantiate(spellPrefab[0], exitPoints[exitIndex].position , Quaternion.identity);
     }
 }
