@@ -93,15 +93,9 @@ public class Player : Character
             direction += Vector2.right;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Block();
-            if ( Target != null && !isAttacking && !IsMoving && InLineOfSight())
-                attackRoutine = StartCoroutine(Attack());
-        }
     }
 
-    private IEnumerator Attack()
+    private IEnumerator Attack(int spellIndex)
     {
       
             isAttacking = true;
@@ -110,16 +104,19 @@ public class Player : Character
 
             yield return new WaitForSeconds(1.5f);
 
-            CastSpell();    
+            Instantiate(spellPrefab[spellIndex], exitPoints[exitIndex].position, Quaternion.identity);
 
             StopAttack();
         
 
     }
 
-    private void CastSpell()
+    public void CastSpell(int spellIndex)
     {
-        Instantiate(spellPrefab[0], exitPoints[exitIndex].position , Quaternion.identity);
+        Block();
+        if (Target != null && !isAttacking && !IsMoving && InLineOfSight())
+            attackRoutine = StartCoroutine(Attack(spellIndex));
+
     }
 
     /// <summary>
