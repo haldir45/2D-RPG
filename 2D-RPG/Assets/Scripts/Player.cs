@@ -29,7 +29,7 @@ public class Player : Character
     private Transform[] exitPoints;
 
     /// <summary>
-    /// The exitIndex depends on player's facing.
+    /// The exitIndex tracks of which exit point to use.
     /// Initial value facing down.
     /// </summary>
     private int exitIndex = 2;
@@ -42,19 +42,20 @@ public class Player : Character
     private Block[] blocks;
 
     /// <summary>
-    /// The block's layerMask
+    /// Block layerMask
     /// </summary>
     private const int blockLayerMask = 1 << 8;
 
-    private Transform target;
+    /// <summary>
+    /// The player's target
+    /// </summary>
+    public Transform Target { get; set; }
 
     // Start is called before the first frame update
     protected override void Start()
     {
         health.Initialize(initHealth, maxHealth);
         mana.Initialize(initMana, maxMana);
-
-        target = GameObject.Find("Target").transform;
 
         base.Start();
     }
@@ -95,7 +96,7 @@ public class Player : Character
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Block();
-            if (!isAttacking && !IsMoving && InLineOfSight())
+            if ( Target != null && !isAttacking && !IsMoving && InLineOfSight())
                 attackRoutine = StartCoroutine(Attack());
         }
     }
@@ -127,9 +128,9 @@ public class Player : Character
     /// <returns></returns>
     private bool InLineOfSight()
     {
-        Vector2 targetDirection = (target.transform.position - transform.position).normalized;
+        Vector2 targetDirection = (Target.transform.position - transform.position).normalized;
 
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, targetDirection, Vector2.Distance(transform.position, target.transform.position), blockLayerMask);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, targetDirection, Vector2.Distance(transform.position, Target.transform.position), blockLayerMask);
 
         if(hit.collider == null)
         {
