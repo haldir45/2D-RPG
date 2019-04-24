@@ -104,7 +104,8 @@ public class Player : Character
 
             yield return new WaitForSeconds(1.5f);
 
-            Instantiate(spellPrefab[spellIndex], exitPoints[exitIndex].position, Quaternion.identity);
+            Spell s = Instantiate(spellPrefab[spellIndex], exitPoints[exitIndex].position, Quaternion.identity).GetComponent<Spell>();
+            s.Target = Target;
 
             StopAttack();
         
