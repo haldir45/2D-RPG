@@ -105,7 +105,7 @@ public class Player : Character
             animator.SetBool("attack", isAttacking);
 
             yield return new WaitForSeconds(newSpell.CastTime);
-
+    
             SpellScript s = Instantiate(newSpell.SpellPrefab, exitPoints[exitIndex].position, Quaternion.identity).GetComponent<SpellScript>();
             s.Target = Target;
 
@@ -151,5 +151,11 @@ public class Player : Character
         blocks[exitIndex].Activate(); 
 
 
+    }
+
+    public override void StopAttack()
+    {
+        spellBook.StopCasting();
+        base.StopAttack();
     }
 }

@@ -109,7 +109,7 @@ public abstract class Character : MonoBehaviour
     /// <summary>
     /// Stops or exits attacking animation
     /// </summary>
-    public void StopAttack()
+    public virtual void StopAttack()
     {
         if (attackRoutine != null)
         {

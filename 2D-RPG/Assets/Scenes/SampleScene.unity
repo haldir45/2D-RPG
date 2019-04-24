@@ -643,6 +643,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1456d5d77d895d749abbce9d6e2f1b82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvasGroup: {fileID: 533374543}
+  fill: {fileID: 519572641}
+  spellIcon: {fileID: 1824419226}
+  spellName: {fileID: 1189481873}
+  spellCastingTime: {fileID: 1039142352}
   spells:
   - name: Fireball
     damage: 5
@@ -904,6 +909,7 @@ GameObject:
   - component: {fileID: 533374540}
   - component: {fileID: 533374542}
   - component: {fileID: 533374541}
+  - component: {fileID: 533374543}
   m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
@@ -971,6 +977,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 533374539}
   m_CullTransparentMesh: 0
+--- !u!225 &533374543
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 533374539}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &567317038
 GameObject:
   m_ObjectHideFlags: 0
@@ -2034,7 +2052,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 90, y: 0}
+  m_AnchoredPosition: {x: 87.7, y: 0}
   m_SizeDelta: {x: 30, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1039142351

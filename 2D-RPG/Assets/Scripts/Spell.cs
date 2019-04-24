@@ -27,4 +27,5 @@ public class Spell
     public float CastTime { get => castTime; }
     public GameObject SpellPrefab { get => SpellPrefab1; }
     public GameObject SpellPrefab1 { get => spellPrefab; }
+    public Color BarColor { get => barColor; set => barColor = value; }
 }
