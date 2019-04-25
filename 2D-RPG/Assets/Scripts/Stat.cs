@@ -61,6 +61,7 @@ public class Stat : MonoBehaviour
 
     public void Initialize(float currentValue,float maxValue)
     {
+
         MyMaxValue = maxValue;
         MyCurrentValue = currentValue;
     }

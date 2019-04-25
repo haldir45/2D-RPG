@@ -163,7 +163,7 @@ public abstract class Character : MonoBehaviour
         if(health.MyCurrentValue <= 0)
         {
             animator.SetTrigger("die");
-           // animator.transform.GetComponent<Enemy>().DeSelect(); Removes health Canvas on die
+            
         }
 
     }

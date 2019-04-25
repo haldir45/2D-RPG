@@ -35,6 +35,12 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private GameObject targetFrame;
 
+    ///<summary>
+    /// The target's portrait frame
+    /// </summary>
+    [SerializeField]
+    private Image portraitFrame;
+
     /// <summary>
     /// The target's health stat
     /// </summary>
@@ -91,8 +97,13 @@ public class UIManager : MonoBehaviour
   
         targetFrame.SetActive(true);
 
+        portraitFrame.sprite = target.Portrait;
+
         healthStat.Initialize(target.Health.MyCurrentValue, target.Health.MyMaxValue);
+
         target.healthChanged += UpdateTargetFrame;
+
+        target.characterRemoved += HideTargetFrame;
 
     }
 

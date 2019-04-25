@@ -8,8 +8,6 @@ public class Enemy : NPC
     [SerializeField]
     private CanvasGroup healthGroup;
 
-
-
     public override Transform Select()
     {
         healthGroup.alpha = 1;
