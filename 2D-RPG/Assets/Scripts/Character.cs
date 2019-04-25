@@ -2,6 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+/// <summary>
+/// This is an  abstract class that all characters needs to inherit from
+/// </summary>
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Animator))]
 public abstract class Character : MonoBehaviour
 {
     /// <summary>
@@ -35,6 +41,30 @@ public abstract class Character : MonoBehaviour
     /// </summary>
     protected Coroutine attackRoutine;
 
+    /// <summary>
+    /// Character's hitbox
+    /// </summary>
+    [SerializeField]
+    protected Transform hitBox;
+
+    /// <summary>
+    /// Character's health
+    /// </summary>
+    [SerializeField]
+    protected Stat health;
+
+    public Stat Health {
+        get {
+            return health;
+        }
+    }
+
+    /// <summary>
+    /// Character's initial and max health
+    /// </summary>
+    [SerializeField]
+    private float initHealth, maxHealth;
+
     public bool IsMoving {
         get {
             return direction.x != 0 || direction.y !=  0;
@@ -46,6 +76,8 @@ public abstract class Character : MonoBehaviour
     // Start is called before the first frame update
     protected virtual void Start()
     {
+        health.Initialize(initHealth, maxHealth);
+
         animator = GetComponent<Animator>();
         rigibody = GetComponent<Rigidbody2D>();
     }
@@ -118,6 +150,22 @@ public abstract class Character : MonoBehaviour
             animator.SetBool("attack", isAttacking);
         }
  
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="damage"></param>
+    public virtual void TakeDamage(float damage)
+    {
+        health.MyCurrentValue -= damage;
+
+        if(health.MyCurrentValue <= 0)
+        {
+            animator.SetTrigger("die");
+            
+        }
+
     }
 
 }

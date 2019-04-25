@@ -18,12 +18,23 @@ public class SpellScript : MonoBehaviour
     /// <summary>
     /// The spell's target
     /// </summary>
-    public Transform Target { get; set; }
+    public Transform Target { get; private set; }
+
+    /// <summary>
+    /// Spell's damage
+    /// </summary>
+    private int damage;
 
     // Start is called before the first frame update
     void Start()
     {
         rigidbody = GetComponent<Rigidbody2D>();
+    }
+
+    public void Initialize(Transform target,int damage)
+    {
+        this.Target = target;
+        this.damage = damage;
     }
 
     // Update is called once per frame
@@ -56,6 +67,8 @@ public class SpellScript : MonoBehaviour
     {
         if(collision.tag == "EnemyHitBox" && collision.transform == Target)
         {
+            speed = 0;
+            collision.GetComponentInParent<Enemy>().TakeDamage(this.damage);
             GetComponent<Animator>().SetTrigger("Impact");
             rigidbody.velocity = Vector2.zero;
             Target = null;

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,13 +8,13 @@ public class Player : Character
     /// The player's health and mana stat
     /// </summary>
     [SerializeField]
-    private Stat health,mana;
+    private Stat mana;
 
     /// <summary>
     /// The player's initial Health,Mana and maximum Heald,Mana
     /// </summary>
     [SerializeField]
-    private float initHealth, maxHealth, initMana, maxMana;
+    private float  initMana, maxMana;
 
     /// <summary>
     /// The player's cast exit points
@@ -54,7 +54,7 @@ public class Player : Character
     // Start is called before the first frame update
     protected override void Start()
     {
-        health.Initialize(initHealth, maxHealth);
+    
         mana.Initialize(initMana, maxMana);
 
         base.Start();
@@ -97,6 +97,7 @@ public class Player : Character
 
     private IEnumerator Attack(int spellIndex)
     {
+            Transform currentTarget = Target;
 
             Spell newSpell = spellBook.CastSpell(spellIndex);
 
@@ -106,8 +107,12 @@ public class Player : Character
 
             yield return new WaitForSeconds(newSpell.CastTime);
     
-            SpellScript s = Instantiate(newSpell.SpellPrefab, exitPoints[exitIndex].position, Quaternion.identity).GetComponent<SpellScript>();
-            s.Target = Target;
+            if(Target != null && InLineOfSight())
+            {
+                SpellScript s = Instantiate(newSpell.SpellPrefab, exitPoints[exitIndex].position, Quaternion.identity).GetComponent<SpellScript>();
+                s.Initialize(currentTarget, newSpell.Damage);
+            }
+        
 
             StopAttack();
         
@@ -128,16 +133,22 @@ public class Player : Character
     /// <returns></returns>
     private bool InLineOfSight()
     {
-        Vector2 targetDirection = (Target.transform.position - transform.position).normalized;
-
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, targetDirection, Vector2.Distance(transform.position, Target.transform.position), blockLayerMask);
-
-        if(hit.collider == null)
+        if(Target != null)
         {
-            return true;
-        }
 
+            Vector2 targetDirection = (Target.transform.position - transform.position).normalized;
+
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, targetDirection, Vector2.Distance(transform.position, Target.transform.position), blockLayerMask);
+
+            if (hit.collider == null)
+            {
+                return true;
+            }
+
+          
+        }
         return false;
+
     }
 
     ///<summary>

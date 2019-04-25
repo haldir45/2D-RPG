@@ -33,6 +33,8 @@ public class Stat : MonoBehaviour
             }
 
             currentFill = currentValue / MyMaxValue;
+
+            if(statValue != null)
             statValue.text = currentValue + "/" + MyMaxValue;
         }
     }
@@ -59,6 +61,7 @@ public class Stat : MonoBehaviour
 
     public void Initialize(float currentValue,float maxValue)
     {
+
         MyMaxValue = maxValue;
         MyCurrentValue = currentValue;
     }
