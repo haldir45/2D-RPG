@@ -97,6 +97,7 @@ public class Player : Character
 
     private IEnumerator Attack(int spellIndex)
     {
+            Transform currentTarget = Target;
 
             Spell newSpell = spellBook.CastSpell(spellIndex);
 
@@ -106,8 +107,12 @@ public class Player : Character
 
             yield return new WaitForSeconds(newSpell.CastTime);
     
-            SpellScript s = Instantiate(newSpell.SpellPrefab, exitPoints[exitIndex].position, Quaternion.identity).GetComponent<SpellScript>();
-            s.Target = Target;
+            if(Target != null && InLineOfSight())
+            {
+                SpellScript s = Instantiate(newSpell.SpellPrefab, exitPoints[exitIndex].position, Quaternion.identity).GetComponent<SpellScript>();
+                s.Target = currentTarget;
+            }
+        
 
             StopAttack();
         

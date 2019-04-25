@@ -2,6 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+/// <summary>
+/// This is an  abstract class that all characters needs to inherit from
+/// </summary>
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Animator))]
 public abstract class Character : MonoBehaviour
 {
     /// <summary>
@@ -34,6 +40,12 @@ public abstract class Character : MonoBehaviour
     /// Character's reference AttackCoroutine
     /// </summary>
     protected Coroutine attackRoutine;
+
+    /// <summary>
+    /// Character's hitbox
+    /// </summary>
+    [SerializeField]
+    protected Transform hitBox;
 
     public bool IsMoving {
         get {

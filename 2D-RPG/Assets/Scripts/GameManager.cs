@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Player player;
 
+    private NPC currentTarget;
+
     /// <summary>
     /// Clickable layer
     /// </summary>
@@ -39,11 +41,21 @@ public class GameManager : MonoBehaviour
             
             if(hit.collider != null)
             {
-                if(hit.collider.tag == "Enemy")
-                player.Target = hit.transform.GetChild(0);
+                if (currentTarget != null)
+                    currentTarget.DeSelect();
+
+                currentTarget = hit.collider.GetComponent<NPC>();
+
+                player.Target = currentTarget.Select();
             }
             else
             {
+                if(currentTarget != null)
+                {
+                    currentTarget.DeSelect();
+                }
+
+                currentTarget = null;
                 player.Target = null;
             }
         }
