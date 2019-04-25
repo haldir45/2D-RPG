@@ -5,6 +5,19 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    private static UIManager instance;
+
+    public static UIManager Instance {
+        get {
+            if(instance == null)
+            {
+                instance = FindObjectOfType<UIManager>();
+            }
+
+            return instance;
+        }
+    }
+
     /// <summary>
     /// The action buttons in the action bar
     /// </summary>
@@ -16,9 +29,24 @@ public class UIManager : MonoBehaviour
     /// </summary>
     private KeyCode action1, action2, action3;
 
+    /// <summary>
+    /// The target's frame
+    /// </summary>
+    [SerializeField]
+    private GameObject targetFrame;
+
+    /// <summary>
+    /// The target's health stat
+    /// </summary>
+    private Stat healthStat;
+
     // Start is called before the first frame update
     void Start()
     {
+
+        healthStat = targetFrame.GetComponentInChildren<Stat>();
+
+
         action1 = KeyCode.Alpha1;
         action2 = KeyCode.Alpha2;
         action3 = KeyCode.Alpha3;
@@ -53,4 +81,36 @@ public class UIManager : MonoBehaviour
     {
         actionButtons[buttonIndex].onClick.Invoke();
     }
+
+    /// <summary>
+    /// Shows the target NPC's frame
+    /// </summary>
+    /// <param name="target"></param>
+    public void ShowTargetFrame(NPC target)
+    {
+  
+        targetFrame.SetActive(true);
+
+        healthStat.Initialize(target.Health.MyCurrentValue, target.Health.MyMaxValue);
+        target.healthChanged += UpdateTargetFrame;
+
+    }
+
+    /// <summary>
+    /// Hides the target NPC's frame
+    /// </summary>
+    /// <param name="target"></param>
+    public void HideTargetFrame()
+    {
+        targetFrame.SetActive(false);
+    }
+
+    ///<summary>
+    ///Updates the target NPC's frame
+    ///</summary>
+    public void UpdateTargetFrame(float health)
+    {
+        healthStat.MyCurrentValue = health;
+    }
+ 
 }
